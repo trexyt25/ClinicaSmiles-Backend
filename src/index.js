@@ -17,6 +17,7 @@ app.use(express.json());
 app.use('/api/patients', require('./routes/patientRoutes'));
 app.use('/api/dentists', require('./routes/dentistRoutes'));
 app.use('/api/appointments', require('./routes/appointmentRoutes'));
+app.use("/api/advanced", require("./routes/advancedRoutes"));
 
 // Ruta de prueba inicial
 app.get('/', (req, res) => {
