@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Appointment = require('../models/Appointment');
+const Patient = require('../models/Patient'); // Asegúrate de que la ruta a tu modelo sea correcta
+const Dentist = require('../models/Dentist'); // Asegúrate de que la ruta a tu modelo sea correcta
 
 // ==========================================
 //                CRUD BÁSICO
@@ -17,27 +19,31 @@ router.post('/', async (req, res) => {
     }
 });
 
-// 2. Obtener todas las citas (con datos completos de paciente y dentista usando populate)
+// 2. Obtener todas las citas (Forzando la resolución de modelos en populate)
 router.get('/', async (req, res) => {
     try {
-        const citas = await Appointment.find().populate('paciente').populate('dentista');
+        const citas = await Appointment.find()
+            .populate({ path: 'paciente', model: Patient })
+            .populate({ path: 'dentista', model: Dentist });
         res.json(citas);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// 3. Modificar/Actualizar una cita (o cambiar su estado)
+// 3. Modificar/Actualizar una cita
 router.put('/:id', async (req, res) => {
     try {
-        const citaActualizada = await Appointment.findByIdAndUpdate(req.params.id, req.body, { new: true }).populate('paciente').populate('dentista');
+        const citaActualizada = await Appointment.findByIdAndUpdate(req.params.id, req.body, { new: true })
+            .populate({ path: 'paciente', model: Patient })
+            .populate({ path: 'dentista', model: Dentist });
         res.json(citaActualizada);
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
 });
 
-// 4. Cancelar/Eliminar una cita de la base de datos
+// 4. Cancelar/Eliminar una cita
 router.delete('/:id', async (req, res) => {
     try {
         await Appointment.findByIdAndDelete(req.params.id);
