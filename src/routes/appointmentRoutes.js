@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
 // 2. Obtener todas las citas (con datos completos de paciente y dentista)
 router.get('/', async (req, res) => {
     try {
-        const citas = await Appointment.find()
+        const citas = await Appointment.find().populate('paciente').populate('dentista');
             .populate('paciente')
             .populate('dentista');
         res.json(citas);
