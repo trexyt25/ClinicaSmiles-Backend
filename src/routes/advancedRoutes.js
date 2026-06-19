@@ -4,7 +4,7 @@ const Appointment = require('../models/Appointment');
 const Patient = require('../models/Patient');
 const Dentist = require('../models/Dentist');
 
-// 1. Mostrar citas de un día específico
+// Mostrar citas de un día específico
 router.get('/citas-dia', async (req, res) => {
     try {
         const { fecha } = req.query; // Formato esperado: YYYY-MM-DD
@@ -15,7 +15,7 @@ router.get('/citas-dia', async (req, res) => {
     }
 });
 
-// 2. Mostrar pacientes registrados recientemente (Últimos 5 ordenados por fecha)
+// Mostrar pacientes registrados recientemente (Últimos 5 ordenados por fecha)
 router.get('/pacientes-recientes', async (req, res) => {
     try {
         const pacientes = await Patient.find().sort({ createdAt: -1 }).limit(5);
@@ -25,7 +25,7 @@ router.get('/pacientes-recientes', async (req, res) => {
     }
 });
 
-// 3. Mostrar citas canceladas
+// Mostrar citas canceladas
 router.get('/citas-canceladas', async (req, res) => {
     try {
         const citas = await Appointment.find({ estado: 'Cancelar' }).populate('paciente').populate('dentista'); // O 'Cancelada' según tu select
@@ -35,7 +35,7 @@ router.get('/citas-canceladas', async (req, res) => {
     }
 });
 
-// 4. Mostrar cantidad de citas por dentista (Usa agregaciones de MongoDB)
+// Mostrar cantidad de citas por dentista (Usa agregaciones de MongoDB)
 router.get('/citas-por-dentista', async (req, res) => {
     try {
         const resultado = await Appointment.aggregate([
@@ -61,7 +61,7 @@ router.get('/citas-por-dentista', async (req, res) => {
     }
 });
 
-// 5. Mostrar citas por especialidad
+// Mostrar citas por especialidad
 router.get('/citas-por-especialidad', async (req, res) => {
     try {
         const { especialidad } = req.query;

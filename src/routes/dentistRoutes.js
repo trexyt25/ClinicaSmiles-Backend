@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Dentist = require('../models/Dentist');
 
-// 1. Registrar un nuevo dentista
+// Registrar un nuevo dentista
 router.post('/', async (req, res) => {
     try {
         const nuevoDentista = new Dentist(req.body);
@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// 2. Obtener todos los dentistas
+// Obtener todos los dentistas
 router.get('/', async (req, res) => {
     try {
         const dentistas = await Dentist.find();
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// 3. Actualizar datos de un dentista
+// Actualizar datos de un dentista
 router.put('/:id', async (req, res) => {
     try {
         const dentistaActualizado = await Dentist.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -33,7 +33,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// 4. Eliminar un dentista
+// Eliminar un dentista
 router.delete('/:id', async (req, res) => {
     try {
         await Dentist.findByIdAndDelete(req.params.id);

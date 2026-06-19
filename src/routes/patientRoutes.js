@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Patient = require('../models/Patient');
 
-// 1. Registrar un nuevo paciente (Alta)
+// Registrar un nuevo paciente (Alta)
 router.post('/', async (req, res) => {
     try {
         const nuevoPaciente = new Patient(req.body);
@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// 2. Obtener todos los pacientes
+// Obtener todos los pacientes
 router.get('/', async (req, res) => {
     try {
         const pacientes = await Patient.find();
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// 3. Actualizar un paciente (Modificación)
+// Actualizar un paciente (Modificación)
 router.put('/:id', async (req, res) => {
     try {
         const pacienteActualizado = await Patient.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -33,7 +33,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// 4. Eliminar un paciente (Baja)
+// Eliminar un paciente (Baja)
 router.delete('/:id', async (req, res) => {
     try {
         await Patient.findByIdAndDelete(req.params.id);

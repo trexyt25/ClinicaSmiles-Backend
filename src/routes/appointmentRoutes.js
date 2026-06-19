@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Appointment = require('../models/Appointment');
-const Patient = require('../models/Patient'); // Asegúrate de que la ruta a tu modelo sea correcta
-const Dentist = require('../models/Dentist'); // Asegúrate de que la ruta a tu modelo sea correcta
+const Patient = require('../models/Patient');
+const Dentist = require('../models/Dentist');
 
 // ==========================================
 //                CRUD BÁSICO
 // ==========================================
 
-// 1. Agendar una nueva cita
+// Agendar una nueva cita
 router.post('/', async (req, res) => {
     try {
         const nuevaCita = new Appointment(req.body);
@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-// 2. Obtener todas las citas (Forzando la resolución de modelos en populate)
+// Obtener todas las citas (Forzando la resolución de modelos en populate)
 router.get('/', async (req, res) => {
     try {
         const citas = await Appointment.find()
@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// 3. Modificar/Actualizar una cita
+// Modificar/Actualizar una cita
 router.put('/:id', async (req, res) => {
     try {
         const citaActualizada = await Appointment.findByIdAndUpdate(req.params.id, req.body, { new: true })
@@ -43,7 +43,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// 4. Cancelar/Eliminar una cita
+// Cancelar/Eliminar una cita
 router.delete('/:id', async (req, res) => {
     try {
         await Appointment.findByIdAndDelete(req.params.id);
